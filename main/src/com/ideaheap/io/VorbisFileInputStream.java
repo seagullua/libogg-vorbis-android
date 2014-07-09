@@ -16,12 +16,7 @@ public class VorbisFileInputStream extends AudioInputStream {
 	}
 
 	private final int oggStreamIdx;
-	
-	static {
-		System.loadLibrary("ogg");
-		System.loadLibrary("vorbis");
-		System.loadLibrary("vorbis-stream");
-	}
+
 	
 	/**
 	 * Opens a file for reading and parses any comments out of the file header.

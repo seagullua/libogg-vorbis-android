@@ -19,12 +19,6 @@ public class VorbisFileOutputStream extends AudioOutputStream {
 	private VorbisInfo info;
     private static final int VORBIS_BLOCK_SIZE = 1024;
 	
-	static {
-		System.loadLibrary("ogg");
-		System.loadLibrary("vorbis");
-		System.loadLibrary("vorbis-stream");
-	}
-	
 	public VorbisFileOutputStream (String fname, VorbisInfo s) throws IOException {
 		info = s;
 		oggStreamIdx = this.create(fname, s);

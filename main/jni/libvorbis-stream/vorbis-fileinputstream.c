@@ -19,6 +19,9 @@
 /* This is arbitrary, If you don't like it, do it better. */
 #define MAX_INPUTSTREAMS 8
 
+#undef JNIEXPORT
+#define JNIEXPORT __attribute__ ((visibility("default")))
+
 struct input_stream {
 	FILE * 				fh;
 	OggVorbis_File 		vf;
@@ -27,7 +30,7 @@ struct input_stream {
 };
 static struct input_stream input_streams[MAX_INPUTSTREAMS];
 
-jint Java_com_ideaheap_io_VorbisFileInputStream_create(
+JNIEXPORT jint Java_com_ideaheap_io_VorbisFileInputStream_create(
 		JNIEnv* env,
 		jobject this,
 		jstring path,
@@ -103,7 +106,7 @@ jint Java_com_ideaheap_io_VorbisFileInputStream_create(
 	return stream_idx;
 }
 
-jint Java_com_ideaheap_io_VorbisFileInputStream_readStreamIdx(
+JNIEXPORT jint Java_com_ideaheap_io_VorbisFileInputStream_readStreamIdx(
 		JNIEnv* 	env,
 		jobject 	this,
 		jint		sidx,
@@ -153,7 +156,7 @@ jint Java_com_ideaheap_io_VorbisFileInputStream_readStreamIdx(
 	return ret >> 1;
 }
 
-jlong Java_com_ideaheap_io_VorbisFileInputStream_skipStreamIdx(
+JNIEXPORT jlong Java_com_ideaheap_io_VorbisFileInputStream_skipStreamIdx(
 		JNIEnv* 	env,
 		jobject 	this,
 		jint		sidx,
@@ -182,7 +185,7 @@ jlong Java_com_ideaheap_io_VorbisFileInputStream_skipStreamIdx(
 
 }
 
-void Java_com_ideaheap_io_VorbisFileInputStream_closeStreamIdx(
+JNIEXPORT void Java_com_ideaheap_io_VorbisFileInputStream_closeStreamIdx(
 		JNIEnv* 	env,
 		jobject 	this,
 		jint		sidx

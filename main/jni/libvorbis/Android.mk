@@ -1,11 +1,11 @@
 LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := libvorbis
+LOCAL_MODULE := libvorbis_static
+LOCAL_MODULE_FILENAME := libvorbis
 LOCAL_CFLAGS += -I$(LOCAL_PATH)/../include -fsigned-char
 LOCAL_CFLAGS += -march=armv6 -marm -mfloat-abi=softfp -mfpu=vfp
 
-LOCAL_SHARED_LIBRARIES := libogg
 
 LOCAL_SRC_FILES := \
 	mdct.c		\
@@ -31,4 +31,4 @@ LOCAL_SRC_FILES := \
 	vorbisfile.c	\
 	vorbisenc.c
 
-include $(BUILD_SHARED_LIBRARY)
+include $(BUILD_STATIC_LIBRARY)
