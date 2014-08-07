@@ -8,7 +8,7 @@ import java.io.IOException;
  *
  */
 public class VorbisFileInputStream extends AudioInputStream {
-
+	private static Object _lock = new Object();
 	private final VorbisInfo info;
 	
 	public VorbisInfo getInfo() {
@@ -22,13 +22,19 @@ public class VorbisFileInputStream extends AudioInputStream {
 	 * Opens a file for reading and parses any comments out of the file header.
 	 */
 	public VorbisFileInputStream(String fname) throws IOException {
-		info = new VorbisInfo();
-		oggStreamIdx = this.create(fname, info);
+		synchronized(_lock)
+		{
+			info = new VorbisInfo();
+			oggStreamIdx = this.create(fname, info);
+		}
 	}
 	
 	@Override
 	public void close() throws IOException {
-		this.closeStreamIdx(oggStreamIdx);
+		synchronized(_lock)
+		{
+			this.closeStreamIdx(oggStreamIdx);
+		}
 	}
 	
 	/**
@@ -40,7 +46,10 @@ public class VorbisFileInputStream extends AudioInputStream {
 	 * @throws IOException
 	 */
 	public int read(short[] pcmBuffer, int offset, int length) throws IOException {
-		return this.readStreamIdx(oggStreamIdx, pcmBuffer, offset, length);
+		synchronized(_lock)
+		{
+			return this.readStreamIdx(oggStreamIdx, pcmBuffer, offset, length);
+		}
 	}
 	
 	private native int create(String fname, VorbisInfo info) throws IOException;
